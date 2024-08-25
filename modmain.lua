@@ -1,4 +1,4 @@
-local PopupDialogRedux = GLOBAL.require("screens/redux/popupdialog")
+local PopupDialogScreen = GLOBAL.require("screens/redux/popupdialog")
 
 table.insert(GLOBAL.STRINGS, "BSP_START_POPUP_TITLE")
 table.insert(GLOBAL.STRINGS, "BSP_START_POPUP_TEXT")
@@ -7,12 +7,12 @@ table.insert(GLOBAL.STRINGS, "BSP_START_POPUP_YOUTUBE")
 table.insert(GLOBAL.STRINGS, "BSP_START_POPUP_CLOSE")
 
 GLOBAL.STRINGS.BSP_START_POPUP_TITLE = "󰀒Приветствуем всей Бузилкой!󰀒"
-GLOBAL.STRINGS.BSP_START_POPUP_TEXT = "Рекомендуем зайти на наш Discord сервер, а так же подписаться на наш YouTube канал."
+GLOBAL.STRINGS.BSP_START_POPUP_TEXT = "Рекомендуем зайти на наш\nDiscord сервер, а так же подписаться\nна наш YouTube канал."
 GLOBAL.STRINGS.BSP_START_POPUP_DISCORD = "󰀔Discord"
 GLOBAL.STRINGS.BSP_START_POPUP_YOUTUBE = "󰀍YouTube"
 GLOBAL.STRINGS.BSP_START_POPUP_CLOSE = "󰀊Закрыть"
 
-local function CreateBuzilkaStartPopup(inst)
+local function CreateBuzilkaStartPopup()
     local function ClosePopup()
         GLOBAL.TheFrontEnd:PopScreen()
     end
@@ -23,7 +23,7 @@ local function CreateBuzilkaStartPopup(inst)
         GLOBAL.VisitURL("https://www.youtube.com/@buzilka")
     end
 
-    local popup = PopupDialogRedux(GLOBAL.STRINGS.BSP_START_POPUP_TITLE, GLOBAL.STRINGS.BSP_START_POPUP_TEXT,{
+    local popup = PopupDialogScreen(GLOBAL.STRINGS.BSP_START_POPUP_TITLE, GLOBAL.STRINGS.BSP_START_POPUP_TEXT,{
         {
             text = GLOBAL.STRINGS.BSP_START_POPUP_DISCORD,
             cb = OpenDiscord
@@ -36,7 +36,9 @@ local function CreateBuzilkaStartPopup(inst)
             text = GLOBAL.STRINGS.BSP_START_POPUP_CLOSE,
             cb = ClosePopup
         }
-    }, false, 300)
+    }, nil, "medium", "dark")
+
+    GLOBAL.TheFrontEnd:PushScreen(popup)
 end
 
-AddPlayerPostInit(CreateBuzilkaStartPopup)
+AddPlayerPostInit(function(inst) inst:DoTaskInTime(0.5, function() CreateBuzilkaStartPopup() end) end)
