@@ -1,21 +1,19 @@
 local _G = GLOBAL
-local STRINGS = _G.STRINGS
 local require = _G.require
 local VisitURL = _G.VisitURL
-local TheFrontEnd = _G.TheFrontEnd
 local PopupDialogScreen = require("screens/popupdialog")
 
-table.insert(STRINGS, "BSP_START_POPUP_TITLE")
-table.insert(STRINGS, "BSP_START_POPUP_TEXT")
-table.insert(STRINGS, "BSP_START_POPUP_DISCORD")
-table.insert(STRINGS, "BSP_START_POPUP_YOUTUBE")
-table.insert(STRINGS, "BSP_START_POPUP_CLOSE")
+table.insert(_G.STRINGS, "BSP_START_POPUP_TITLE")
+table.insert(_G.STRINGS, "BSP_START_POPUP_TEXT")
+table.insert(_G.STRINGS, "BSP_START_POPUP_DISCORD")
+table.insert(_G.STRINGS, "BSP_START_POPUP_YOUTUBE")
+table.insert(_G.STRINGS, "BSP_START_POPUP_CLOSE")
 
-STRINGS.BSP_START_POPUP_TITLE = "󰀒Приветствуем всей Бузилкой!󰀒"
-STRINGS.BSP_START_POPUP_TEXT = "Рекомендуем зайти на наш Discord сервер, а так же подписаться на наш YouTube канал."
-STRINGS.BSP_START_POPUP_DISCORD = "󰀔Discord"
-STRINGS.BSP_START_POPUP_YOUTUBE = "󰀍YouTube"
-STRINGS.BSP_START_POPUP_CLOSE = "󰀊Закрыть"
+_G.STRINGS.BSP_START_POPUP_TITLE = "󰀒Приветствуем всей Бузилкой!󰀒"
+_G.STRINGS.BSP_START_POPUP_TEXT = "Рекомендуем зайти на наш Discord сервер, а так же подписаться на наш YouTube канал."
+_G.STRINGS.BSP_START_POPUP_DISCORD = "󰀔Discord"
+_G.STRINGS.BSP_START_POPUP_YOUTUBE = "󰀍YouTube"
+_G.STRINGS.BSP_START_POPUP_CLOSE = "󰀊Закрыть"
 
 local function CreateBuzilkaPopup(inst)
     local function OnDiscord()
@@ -27,25 +25,25 @@ local function CreateBuzilkaPopup(inst)
     end
 
     local function OnClose()
-        TheFrontEnd:PopScreen()
+        _G.TheFrontEnd:PopScreen()
     end
 
-    local popup = PopupDialogScreen(STRINGS.BSP_START_POPUP_TITLE, STRINGS.BSP_START_POPUP_TEXT, {
+    local popup = PopupDialogScreen(_G.STRINGS.BSP_START_POPUP_TITLE, _G.STRINGS.BSP_START_POPUP_TEXT, {
         {
-            text = STRINGS.BSP_START_POPUP_DISCORD,
+            text = _G.STRINGS.BSP_START_POPUP_DISCORD,
             cb = OnDiscord
         },
         {
-            text = STRINGS.BSP_START_POPUP_YOUTUBE,
+            text = _G.STRINGS.BSP_START_POPUP_YOUTUBE,
             cb = OnYoutube
         },
         {
-            text = STRINGS.BSP_START_POPUP_CLOSE,
+            text = _G.STRINGS.BSP_START_POPUP_CLOSE,
             cb = OnClose
         }
     }, false, 300)
 
-    TheFrontEnd:PushScreen(popup)
+    _G.TheFrontEnd:PushScreen(popup)
 end
 
 AddPlayerPostInit(CreateBuzilkaPopup)
