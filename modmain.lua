@@ -12,33 +12,25 @@ GLOBAL.STRINGS.BSP_START_POPUP_DISCORD = "󰀔Discord"
 GLOBAL.STRINGS.BSP_START_POPUP_YOUTUBE = "󰀍YouTube"
 GLOBAL.STRINGS.BSP_START_POPUP_CLOSE = "󰀊Закрыть"
 
-local function CreateBuzilkaStartPopup()
-    local function ClosePopup()
-        GLOBAL.TheFrontEnd:PopScreen()
-    end
-    local function OpenDiscord()
-        GLOBAL.VisitURL("https://discord.gg/tHH9RyYTEB")
-    end
-    local function OpenYoutube()
-        GLOBAL.VisitURL("https://www.youtube.com/@buzilka")
-    end
-
-    local popup = PopupDialogScreen(GLOBAL.STRINGS.BSP_START_POPUP_TITLE, GLOBAL.STRINGS.BSP_START_POPUP_TEXT,{
+function CreateBuzilkaStartPopup()
+    GLOBAL.TheFrontEnd:PushScreen(PopupDialogScreen(GLOBAL.STRINGS.BSP_START_POPUP_TITLE, GLOBAL.STRINGS.BSP_START_POPUP_TEXT,{
         {
             text = GLOBAL.STRINGS.BSP_START_POPUP_DISCORD,
-            cb = OpenDiscord
+            cb = function() GLOBAL.VisitURL("https://discord.gg/tHH9RyYTEB") end
         },
         {
             text = GLOBAL.STRINGS.BSP_START_POPUP_YOUTUBE,
-            cb = OpenYoutube
+            cb = function() GLOBAL.VisitURL("https://www.youtube.com/@buzilka") end
         },
         {
             text = GLOBAL.STRINGS.BSP_START_POPUP_CLOSE,
-            cb = ClosePopup
+            cb = function() GLOBAL.TheFrontEnd:PopScreen() end
         }
-    }, nil, "medium", "dark")
-
-    GLOBAL.TheFrontEnd:PushScreen(popup)
+    }, nil, "medium", "dark"))
 end
 
-AddPlayerPostInit(function(inst) inst:DoTaskInTime(0.5, function() CreateBuzilkaStartPopup() end) end)
+local function PlayerSpawnPopup(inst)
+    inst:DoTaskInTime(0.5, function() CreateBuzilkaStartPopup() end)
+end
+
+AddPlayerPostInit(PlayerSpawnPopup)
