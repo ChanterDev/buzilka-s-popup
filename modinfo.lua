@@ -2,7 +2,7 @@ name = "Buzilka's Popup"
 description = "Add popup about Buzilka"
 author = "Chanter"
 
-version = "1.0.0"
+version = "1.0.1"
 
 forumthread = ""
 api_version = 10

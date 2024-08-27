@@ -12,6 +12,8 @@ GLOBAL.STRINGS.BSP_START_POPUP_DISCORD = "󰀔Discord"
 GLOBAL.STRINGS.BSP_START_POPUP_YOUTUBE = "󰀍YouTube"
 GLOBAL.STRINGS.BSP_START_POPUP_CLOSE = "󰀊Закрыть"
 
+local popupShowed = false
+
 function CreateBuzilkaStartPopup()
     GLOBAL.TheFrontEnd:PushScreen(PopupDialogScreen(GLOBAL.STRINGS.BSP_START_POPUP_TITLE, GLOBAL.STRINGS.BSP_START_POPUP_TEXT,{
         {
@@ -29,8 +31,10 @@ function CreateBuzilkaStartPopup()
     }, nil, "medium", "dark"))
 end
 
-local function PlayerSpawnPopup(inst)
-    inst:DoTaskInTime(0.5, function() CreateBuzilkaStartPopup() end)
+local function ShowPopup(player)
+    if popupShowed then return nil end
+    player:DoTaskInTime(0.5, CreateBuzilkaStartPopup)
+    popupShowed = true
 end
 
-AddPlayerPostInit(PlayerSpawnPopup)
+AddPlayerPostInit(ShowPopup)
